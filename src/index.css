@@ -224,6 +224,7 @@ code {
   width: 540px;
   height: 340px;
   margin: 0 auto;
+  
 }
 
 .id-card-inner {
@@ -276,6 +277,21 @@ code {
   padding: 12px;
   text-align: center;
   color: white;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.id-card-header h1 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
+  padding: 0;
+  color: white;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .id-card-body {
@@ -287,7 +303,9 @@ code {
   align-items: center;
   height: calc(100% - 70px);
   background: linear-gradient(135deg, rgba(133, 217, 243, 0.4) 0%, rgba(255, 255, 255, 0.9) 100%);
+  color: #1e293b;
 }
+
 
 .id-card-left {
   flex-shrink: 0;
@@ -320,7 +338,7 @@ code {
 
 .id-detail-label {
   width: 40%;
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 600;
   color: #64748b;
   text-transform: uppercase;
@@ -330,14 +348,14 @@ code {
 .id-detail-value {
   width: 60%;
   text-align: right;
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 700;
   color: #1e293b;
 }
 
 .id-name-row .id-detail-value {
   color: #6d15df;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 800;
 }
 
@@ -435,6 +453,5 @@ code {
   --tw-shadow: none !important;
   --tw-shadow-colored: none !important;
   --tw-outline-style: none !important;
-  border-color: #e2e8f0 !important;
   color-scheme: light !important;
 }

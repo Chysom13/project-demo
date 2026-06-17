@@ -48,16 +48,14 @@ const Navbar = ({ onViewReceipt, onViewID }: NavbarProps) => {
                 <CreditCard className="mr-2 h-4 w-4 text-blue-400" />
                 Digital ID
               </Button>
-              {onViewReceipt && (
-                <Button 
-                  variant="ghost" 
-                  onClick={onViewReceipt}
-                  className="text-slate-300 hover:text-white hover:bg-white/5 text-xs font-bold uppercase tracking-widest"
-                >
-                  <FileText className="mr-2 h-4 w-4 text-amber-400" />
-                  View Receipts
-                </Button>
-              )}
+              <Button 
+                variant="ghost" 
+                onClick={onViewReceipt}
+                className="text-slate-300 hover:text-white hover:bg-white/5 text-xs font-bold uppercase tracking-widest"
+              >
+                <FileText className="mr-2 h-4 w-4 text-amber-400" />
+                View Receipt
+              </Button>
             </div>
             <div className="h-4 w-px bg-white/10 mx-2"></div>
             <Link to="/">

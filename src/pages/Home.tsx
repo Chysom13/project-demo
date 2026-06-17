@@ -2,19 +2,18 @@ import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
+import { getIDStatus } from '@/lib/idStatus';
+import { formatReceiptDate } from '@/lib/receipt';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import PaymentPortal from '@/components/PaymentPortal';
 import AuthSplitLayout from '@/components/AuthSplitLayout';
 
 const Home = () => {
   const [matricNumber, setMatricNumber] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [showPayment, setShowPayment] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [tempStudent, setTempStudent] = useState<{ id: string, matric_number: string, name: string } | null>(null);
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -50,18 +49,64 @@ const Home = () => {
 
       toast.success('Login successful!');
 
-      // 4. Check if fee has been paid
-      const { data: replacement } = await supabase
-        .from('id_replacements')
-        .select('fee_paid')
-        .eq('student_id', student.matric_number)
-        .single();
+      // 4. Check ID status via utility and route accordingly
+      const status = await getIDStatus(student.matric_number);
 
-      if (replacement?.fee_paid) {
-        navigate(`/card/${student.id}`);
-      } else {
-        setTempStudent({ id: student.id, matric_number: student.matric_number, name: student.name });
-        setShowPayment(true);
+      switch (status.status_label) {
+        case 'active':
+        case 'expiring_soon':
+          navigate(`/card/${student.id}`);
+          break;
+
+        case 'pending':
+          navigate('/status', {
+            state: {
+              receiptNumber: null,
+              fromLogin: true,
+              matricNumber: student.matric_number,
+            },
+          });
+          break;
+
+        case 'waitlisted':
+          navigate('/status', {
+            state: {
+              fromLogin: true,
+              matricNumber: student.matric_number,
+            },
+          });
+          toast.error('Your verification is on hold. Check your status for details.');
+          break;
+
+        case 'expired':
+          navigate('/payment', {
+            state: {
+              matricNumber: student.matric_number,
+              studentName: student.name,
+            },
+          });
+          toast.error(`Your ID expired on ${formatReceiptDate(status.expires_at)}. Please renew.`);
+          break;
+
+        case 'revoked':
+          navigate('/payment', {
+            state: {
+              matricNumber: student.matric_number,
+              studentName: student.name,
+            },
+          });
+          toast.error('Your access has been revoked. Contact the admin office.');
+          break;
+
+        default:
+          // not_found — first time or no active ID
+          navigate('/payment', {
+            state: {
+              matricNumber: student.matric_number,
+              studentName: student.name,
+            },
+          });
+          break;
       }
     } catch (err) {
       console.error(err);
@@ -70,17 +115,6 @@ const Home = () => {
       setIsLoading(false);
     }
   };
-
-  if (showPayment) {
-    return (
-      <PaymentPortal 
-        matricNumber={tempStudent?.matric_number || ''}
-        studentName={tempStudent?.name || ''}
-        onComplete={() => navigate(`/card/${tempStudent?.id}`)}
-        onCancel={() => setShowPayment(false)}
-      />
-    );
-  }
 
   return (
     <AuthSplitLayout>

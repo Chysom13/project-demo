@@ -1,50 +1,86 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { X } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { generateReceiptNumber } from '@/lib/receipt';
+
+const AMOUNT = 5000;
 
 interface PaymentPortalProps {
   matricNumber: string;
   studentName: string;
-  onComplete: () => void;
   onCancel: () => void;
 }
 
-const PaymentPortal = ({ matricNumber, studentName, onComplete, onCancel }: PaymentPortalProps) => {
+const PaymentPortal = ({ matricNumber, studentName, onCancel }: PaymentPortalProps) => {
+  const navigate = useNavigate();
   const [isPaying, setIsPaying] = useState(false);
 
   const handleSimulatePayment = async () => {
     setIsPaying(true);
+    const receiptNumber = generateReceiptNumber();
+    const requestedAt = new Date().toISOString();
     try {
       // Simulate network delay
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      const requestedAt = new Date().toISOString();
-      const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 4).toISOString(); // 4 years expiry
 
-      // Log into id_replacements table
-      const { error } = await supabase
+      // Upsert into id_replacements — pending until admin verifies
+      const { data: replacement, error } = await supabase
         .from('id_replacements')
         .upsert({
-          student_id: matricNumber,
+          matric_number: matricNumber,
           name: studentName,
           requested_at: requestedAt,
-          expires_at: expiresAt
+          expires_at: null,
+          is_valid: false,
+          verification_status: 'pending',
+          verified_at: null,
+          waitlist_reason: null,
         }, {
-          onConflict: 'student_id'
-        });
+          onConflict: 'matric_number',
+          ignoreDuplicates: false,
+        })
+        .select('id')
+        .single();
 
       if (error) {
-        console.error('Supabase Upsert Error:', error);
         throw error;
       }
 
-      toast.success('Payment successful and record logged!');
-      onComplete(); // Skip receipt and proceed directly to ID Card
+      // Log successful payment transaction
+      const { error: txError } = await supabase
+        .from('payment_transactions')
+        .insert({
+          matric_number: matricNumber,
+          amount: AMOUNT,
+          status: 'success',
+          receipt_number: receiptNumber,
+          id_replacement_id: replacement.id,
+        });
+
+      if (txError) {
+        console.error('Payment transaction log error:', txError);
+      }
+
+      toast.success('Payment successful! Your request is pending admin verification.');
+
+      navigate('/status', { state: { receiptNumber, amount: AMOUNT, requestedAt, matricNumber } });
     } catch (err) {
       console.error(err);
-      toast.error('Failed to log transaction. Please try again.');
+
+      // Log failed transaction — do NOT upsert id_replacements
+      await supabase
+        .from('payment_transactions')
+        .insert({
+          matric_number: matricNumber,
+          amount: AMOUNT,
+          status: 'failed',
+          receipt_number: receiptNumber,
+        });
+
+      toast.error('Payment failed. Please try again.');
     } finally {
       setIsPaying(false);
     }

@@ -33,10 +33,14 @@ export interface EnrolledCourse {
 export interface IDReplacement {
   id: string;
   created_at: string;
-  student_id: string;
+  matric_number: string;
   name: string;
   fee_paid: boolean;
   requested_at: string;
   expires_at: string;
+  is_valid: boolean;
+  verification_status: 'pending' | 'verified' | 'waitlisted';
+  verified_at: string | null;
+  waitlist_reason: string | null;
 }
 

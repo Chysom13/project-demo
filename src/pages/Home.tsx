@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import AuthSplitLayout from '@/components/AuthSplitLayout';
 
 const Home = () => {
+  sessionStorage.clear();
   const [matricNumber, setMatricNumber] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -48,6 +49,9 @@ const Home = () => {
       }
 
       toast.success('Login successful!');
+
+      sessionStorage.setItem('matric_number', student.matric_number);
+      sessionStorage.setItem('student_name', student.name);
 
       // 4. Check ID status via utility and route accordingly
       const status = await getIDStatus(student.matric_number);

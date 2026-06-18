@@ -1,4 +1,6 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { useIDStatusPoll } from './hooks/useIDStatusPoll';
 import { Toaster } from 'sonner';
 import Home from './pages/Home';
 import Signup from './pages/Signup';
@@ -15,16 +17,66 @@ import Transactions from './pages/admin/Transactions';
 
 import './App.css';
 
+const SessionPoll = () => {
+  const { pathname } = useLocation();
+  const isStudentRoute =
+    !pathname.startsWith('/verify') &&
+    !pathname.startsWith('/signup') &&
+    !pathname.startsWith('/admin') &&
+    pathname !== '/';
+  useIDStatusPoll(isStudentRoute);
+  return null;
+};
+
+const TITLE_MAP: Record<string, string> = {
+  '/': 'Login',
+  '/signup': 'Sign Up',
+  '/status': 'Status',
+  '/payment': 'Payment',
+};
+
+const PREFIX_TITLE_MAP: [string, string][] = [
+  ['/card/', 'My ID Card'],
+  ['/verify/', 'Verify Student'],
+  ['/admin/verifications/awaiting', 'Admin - Awaiting Verification'],
+  ['/admin/verifications/waitlisted', 'Admin - Waitlisted'],
+  ['/admin/id-status', 'Admin - ID Status'],
+  ['/admin/transactions', 'Admin - Transactions'],
+  ['/admin', 'Admin'],
+];
+
+const TitleUpdater = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const exact = TITLE_MAP[pathname];
+    if (exact) {
+      document.title = `${exact} | MTU One ID Portal`;
+      return;
+    }
+    const match = PREFIX_TITLE_MAP.find(([prefix]) => pathname.startsWith(prefix));
+    if (match) {
+      document.title = `${match[1]} | MTU One ID Portal`;
+      return;
+    }
+    document.title = 'MTU One ID Portal';
+  }, [pathname]);
+
+  return null;
+};
+
 const App = () => {
   return (
     <Router>
       <Toaster position="top-center" richColors />
       <div className="dark min-h-screen bg-background font-sans text-foreground">
+        <SessionPoll />
+        <TitleUpdater />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup/:id?" element={<Signup />} />
           <Route path="/card/:id" element={<IDCard />} />
-          <Route path="/verify/:matricNumber" element={<Verify />} />
+          <Route path="/verify/:id" element={<Verify />} />
           <Route path="/status" element={<StatusPage />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route element={<AdminRoute />}>

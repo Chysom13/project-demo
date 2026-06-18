@@ -89,7 +89,7 @@ export function WaitlistDialog({ student, onSuccess, onClose }: WaitlistDialogPr
           </Alert>
 
           {/* Student Info Panel */}
-          <div className="bg-white/5 rounded-xl border border-white/10 p-4 space-y-2">
+          <div className="bg-slate-800 rounded-xl border border-white/10 p-4 space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-slate-400">Name:</span>
               <span className="text-white font-medium text-right">{student.name}</span>
@@ -111,7 +111,7 @@ export function WaitlistDialog({ student, onSuccess, onClose }: WaitlistDialogPr
               placeholder="e.g. Payment amount mismatch, incorrect student details..."
               maxLength={MAX_REASON_LENGTH}
               rows={3}
-              className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 resize-none"
+              className="bg-slate-800 border-white/10 text-white placeholder:text-slate-500 resize-none"
             />
             <div className="flex justify-between items-center">
               <p className="text-xs text-slate-500">

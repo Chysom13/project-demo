@@ -85,7 +85,7 @@ const IDCard3D: React.FC<IDCard3DProps> = ({ student, forceSide }) => {
 
   // Back Face Component
   const BackFace = () => (
-    <div className="id-card-back">
+    <div className="id-card-back" style={forceSide === 'back' ? { transform: 'none', backfaceVisibility: 'visible' } : undefined}>
       <div className="id-card-back-content">
         <p className="id-back-text-sm">
           This card remains the property of Mountain Top University.
@@ -115,7 +115,7 @@ const IDCard3D: React.FC<IDCard3DProps> = ({ student, forceSide }) => {
 
         <div className="mt-2 bg-white p-1 rounded-sm shadow-sm border border-[#f1f5f9]">
           <Barcode 
-            value={window.location.origin + "/verify/" + student.matric_number}
+            value={window.location.origin + "/verify/" + student.id}
             width={0.7}
             height={35}
             displayValue={false}

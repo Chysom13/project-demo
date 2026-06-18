@@ -28,6 +28,7 @@ const IDCardPage = () => {
   } | null>(null);
   const [showReceipt, setShowReceipt] = useState(false);
   const [expiryInfo, setExpiryInfo] = useState<{ expires_at: string; days_remaining: number; status_label: string } | null>(null);
+  const [isDownloading, setIsDownloading] = useState(false);
   const navigate = useNavigate();
   const { toPDF, targetRef } = usePDF({ 
     filename: `MTU_ID_CARD_${student?.matric_number || 'STUDENT'}.pdf`,
@@ -212,11 +213,24 @@ const IDCardPage = () => {
           </div>
           
           <Button 
-            onClick={() => toPDF()}
-            className="bg-[#12bca2] hover:bg-[#0fa891] text-white font-bold h-12 px-8 rounded-xl shadow-lg shadow-[#12bca2]/20 transition-all active:scale-95"
+            onClick={async () => {
+              setIsDownloading(true);
+              try {
+                await toPDF();
+              } catch {
+                toast.error('Download failed. Please try again.');
+              } finally {
+                setIsDownloading(false);
+              }
+            }}
+            disabled={isDownloading}
+            className="bg-[#12bca2] hover:bg-[#0fa891] text-white font-bold h-12 px-8 rounded-xl shadow-lg shadow-[#12bca2]/20 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Download className="mr-2 h-5 w-5" />
-            Download PDF
+            {isDownloading ? (
+              <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Preparing PDF...</>
+            ) : (
+              <><Download className="mr-2 h-5 w-5" /> Download PDF</>
+            )}
           </Button>
         </div>
 
@@ -243,7 +257,19 @@ const IDCardPage = () => {
             )}
           </div>
 
-  
+          <div className="mt-8 text-center">
+            <Button
+              onClick={() => navigate(`/verify/${student.id}`)}
+              variant="outline"
+              className="border-[#12bca2]/30 text-[#12bca2] hover:bg-[#12bca2]/10 font-bold gap-2 rounded-xl"
+            >
+              <ShieldCheck className="h-4 w-4" />
+              Verify This ID
+            </Button>
+            <p className="mt-2 text-xs text-slate-500">
+              Third-party verification page for this student ID
+            </p>
+          </div>
 
         {/* Hidden Container for PDF Capture */}
         <div className="fixed top-0 left-0 opacity-0 pointer-events-none" id="pdf-capture-area" style={{ zIndex: -1 }}>

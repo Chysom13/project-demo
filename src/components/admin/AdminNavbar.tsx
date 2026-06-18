@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
@@ -45,7 +45,21 @@ const menuItems = [
 const AdminNavbar = () => {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [waitlistCount, setWaitlistCount] = useState(0);
   const adminMatric = localStorage.getItem('adminMatricNumber') || 'Not signed in';
+
+  useEffect(() => {
+    const fetchWaitlistCount = async () => {
+      const { count } = await supabase
+        .from('id_replacements')
+        .select('*', { count: 'exact', head: true })
+        .eq('verification_status', 'waitlisted');
+      if (count !== null) setWaitlistCount(count);
+    };
+    fetchWaitlistCount();
+    const interval = setInterval(fetchWaitlistCount, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   const isActive = (path: string) => location.pathname === path;
   const isVerificationsActive = location.pathname.startsWith('/admin/verifications');
@@ -81,6 +95,11 @@ const AdminNavbar = () => {
                     >
                       {item.icon}
                       {item.label}
+                      {waitlistCount > 0 && (
+                        <span className="inline-flex items-center justify-center h-4 min-w-[16px] px-1 rounded-full bg-orange-500 text-[8px] font-black text-white leading-none ml-1">
+                          {waitlistCount}
+                        </span>
+                      )}
                       <ChevronDown className="h-3 w-3 transition-transform group-data-[state=open]/trigger:rotate-180" />
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
@@ -96,7 +115,14 @@ const AdminNavbar = () => {
                                 : 'text-slate-300 hover:bg-white/5 hover:text-white'
                             }`}
                           >
-                            <span className="text-sm font-bold">{child.label}</span>
+                            <span className="text-sm font-bold flex items-center gap-2">
+                              {child.label}
+                              {child.path === '/admin/verifications/waitlisted' && waitlistCount > 0 && (
+                                <span className="inline-flex items-center justify-center h-4.5 min-w-[18px] px-1 rounded-full bg-orange-500 text-[9px] font-black text-white leading-none">
+                                  {waitlistCount}
+                                </span>
+                              )}
+                            </span>
                             <span className="text-[11px] text-slate-500">{child.description}</span>
                           </Link>
                         ))}
@@ -170,6 +196,11 @@ const AdminNavbar = () => {
                     <div className="flex items-center gap-2 px-3 py-2 text-xs font-bold uppercase tracking-widest text-slate-400">
                       {item.icon}
                       {item.label}
+                      {waitlistCount > 0 && (
+                        <span className="inline-flex items-center justify-center h-4 min-w-[16px] px-1 rounded-full bg-orange-500 text-[8px] font-black text-white leading-none">
+                          {waitlistCount}
+                        </span>
+                      )}
                     </div>
                     <div className="ml-4 space-y-0.5">
                       {item.children.map((child) => (
@@ -183,8 +214,15 @@ const AdminNavbar = () => {
                               : 'text-slate-300 hover:bg-white/5'
                           }`}
                         >
-                          <span className="text-sm font-bold">{child.label}</span>
-                          <span className="text-[11px] text-slate-500">{child.description}</span>
+                          <span className="text-sm font-bold flex items-center gap-2">
+                              {child.label}
+                              {child.path === '/admin/verifications/waitlisted' && waitlistCount > 0 && (
+                                <span className="inline-flex items-center justify-center h-4.5 min-w-[18px] px-1 rounded-full bg-orange-500 text-[9px] font-black text-white leading-none">
+                                  {waitlistCount}
+                                </span>
+                              )}
+                            </span>
+                            <span className="text-[11px] text-slate-500">{child.description}</span>
                         </Link>
                       ))}
                     </div>

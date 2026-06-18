@@ -215,7 +215,7 @@ const Waitlisted = () => {
 
       {/* Bulk Action Toolbar */}
       {selectedIds.size > 0 && (
-        <div className="sticky top-0 z-10 bg-blue-600/10 border border-blue-500/20 rounded-2xl p-5 mb-6 backdrop-blur-sm">
+        <div className="sticky top-0 z-10 bg-blue-600/20 border border-blue-500/30 rounded-2xl p-5 mb-6 backdrop-blur-sm">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex items-center gap-2 shrink-0">
               <CheckCircle2 className="h-5 w-5 text-blue-400" />
@@ -232,7 +232,7 @@ const Waitlisted = () => {
                   value={bulkExpiryDate}
                   min={new Date(Date.now() + 86400000).toISOString().slice(0, 10)}
                   onChange={(e) => setBulkExpiryDate(e.target.value)}
-                  className="h-8 w-40 bg-white/5 border-white/10 text-white rounded-lg text-xs"
+                    className="h-8 w-40 bg-slate-800 border-white/10 text-white rounded-lg text-xs"
                 />
               </div>
 
@@ -246,7 +246,7 @@ const Waitlisted = () => {
                     key={months}
                     type="button"
                     onClick={() => setBulkExpiryDate(addMonths(new Date(), months).toISOString().slice(0, 10))}
-                    className="px-2.5 py-1 text-[10px] font-bold rounded-lg border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors"
+                    className="px-2.5 py-1 text-[10px] font-bold rounded-lg border border-white/10 bg-slate-800 text-white hover:bg-slate-700 transition-colors"
                   >
                     {label}
                   </button>
@@ -290,16 +290,16 @@ const Waitlisted = () => {
 
       {/* Table */}
       {records.length === 0 ? (
-        <div className="bg-white/5 rounded-2xl border border-white/10 py-16 text-center">
+        <div className="bg-slate-800/60 rounded-2xl border border-white/10 py-16 text-center">
           <CheckCircle2 className="h-8 w-8 text-green-500 mx-auto mb-3" />
           <p className="text-slate-500 font-medium">No students on the waitlist.</p>
         </div>
       ) : (
-        <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+        <div className="bg-slate-800/60 rounded-2xl border border-white/10 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/10 bg-white/5">
+                <tr className="border-b border-white/10 bg-white/10">
                   <Th>
                     <Checkbox
                       checked={allSelected || someSelected ? (allSelected ? true : 'indeterminate' as any) : false}
@@ -340,7 +340,7 @@ const Waitlisted = () => {
                         {row.receipt_number || '—'}
                       </span>
                     </Td>
-                    <Td className="font-mono font-bold">
+                    <Td className="font-mono font-bold text-slate-400">
                       {row.amount ? `₦${row.amount.toLocaleString()}` : '—'}
                     </Td>
                     <Td className="text-slate-400 text-xs max-w-[200px]">

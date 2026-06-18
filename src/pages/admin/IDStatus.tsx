@@ -65,7 +65,7 @@ const SummaryCard = ({
   value: string | number;
   className?: string;
 }) => (
-  <div className="bg-white/5 rounded-2xl border border-white/10 p-5">
+  <div className="bg-slate-800/60 rounded-2xl border border-white/10 p-5">
     <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">{label}</p>
     <p className={`text-2xl font-black ${className || 'text-white'}`}>{value}</p>
   </div>
@@ -198,10 +198,10 @@ const IDStatus = () => {
         <div className="flex items-center gap-2">
           <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Filter:</span>
           <Select value={filter} onValueChange={(v: StatusValue) => setFilter(v)}>
-            <SelectTrigger className="h-10 w-36 bg-white/5 border-white/10 text-white rounded-xl">
+            <SelectTrigger className="h-10 w-36 bg-slate-800 border-white/10 text-white rounded-xl">
               <SelectValue placeholder="All IDs" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className='bg-slate-700 text-white'>
               <SelectItem value="all">All IDs</SelectItem>
               <SelectItem value="active">Active</SelectItem>
               <SelectItem value="expiring_soon">Expiring Soon</SelectItem>
@@ -216,24 +216,24 @@ const IDStatus = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by name or matric no..."
-            className="h-10 w-64 pl-10 bg-white/5 border-white/10 text-white placeholder:text-slate-500 rounded-xl"
+            className="h-10 w-64 pl-10 bg-slate-800 border-white/10 text-white placeholder:text-slate-500 rounded-xl"
           />
         </div>
       </div>
 
       {/* Info Note */}
-      <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl px-4 py-3 mb-4">
+      <div className="bg-blue-500/20 border border-blue-500/30 rounded-xl px-4 py-3 mb-4">
         <p className="text-xs text-blue-400">
           Expiry dates are set during the verification process. To update a student's expiry, ask them to repay and reverify.
         </p>
       </div>
 
       {/* Table */}
-      <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+      <div className="bg-slate-800/60 rounded-2xl border border-white/10 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 bg-white/5">
+              <tr className="border-b border-white/10 bg-white/10">
                 <Th>Student Name</Th>
                 <Th>Matric No.</Th>
                 <Th>Issued On</Th>
@@ -276,7 +276,7 @@ const IDStatus = () => {
                       <Td className="text-slate-400 text-xs whitespace-nowrap">
                         {row.expires_at ? formatReceiptDate(row.expires_at) : '—'}
                       </Td>
-                      <Td className={`text-sm font-mono ${
+                      <Td className={`text-sm font-mono text-slate-400 ${
                         isRevoked
                           ? 'text-slate-500'
                           : daysRemaining !== null && daysRemaining <= 0
@@ -305,7 +305,7 @@ const IDStatus = () => {
                               setRevokeTarget(row);
                               setShowRevokeDialog(true);
                             }}
-                            className="gap-1"
+                            className="gap-1 text-red-600 cursor-pointer"
                           >
                             <Ban className="h-3 w-3" />
                             Revoke Access

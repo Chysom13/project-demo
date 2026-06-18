@@ -120,7 +120,7 @@ export function VerifyDialog({ student, onSuccess, onClose }: VerifyDialogProps)
 
         <div className="space-y-5 py-2">
           {/* Student Info Panel */}
-          <div className="bg-white/5 rounded-xl border border-white/10 p-4 space-y-2">
+          <div className="bg-slate-800 rounded-xl border border-white/10 p-4 space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-slate-400">Name:</span>
               <span className="text-white font-medium text-right">{student.name}</span>
@@ -145,7 +145,7 @@ export function VerifyDialog({ student, onSuccess, onClose }: VerifyDialogProps)
               value={expiryDate}
               min={minDate}
               onChange={(e) => { setExpiryDate(e.target.value); setError(''); }}
-              className="h-10 bg-white/5 border-white/10 text-white rounded-xl"
+              className="h-10 bg-slate-800 border-white/10 text-white rounded-xl"
             />
             <p className="text-xs text-slate-500">The student will lose access automatically on this date.</p>
           </div>
@@ -163,7 +163,7 @@ export function VerifyDialog({ student, onSuccess, onClose }: VerifyDialogProps)
                   key={months}
                   type="button"
                   onClick={() => handleShortcut(months)}
-                  className="flex-1 px-3 py-2 text-xs font-bold rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors"
+                  className="flex-1 px-3 py-2 text-xs font-bold rounded-xl border border-white/10 bg-slate-800 text-white hover:bg-slate-700 transition-colors"
                 >
                   {label}
                 </button>
@@ -173,7 +173,7 @@ export function VerifyDialog({ student, onSuccess, onClose }: VerifyDialogProps)
 
           {/* Preview Line */}
           {selectedDate && daysRemaining !== null && daysRemaining > 0 && (
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl px-4 py-3">
+            <div className="bg-blue-500/20 border border-blue-500/30 rounded-xl px-4 py-3">
               <p className="text-sm text-blue-400 font-medium">
                 Student will have access from today until{' '}
                 <strong>{formatReceiptDate(selectedDate.toISOString())}</strong> ({daysRemaining} days)

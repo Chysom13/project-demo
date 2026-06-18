@@ -59,7 +59,7 @@ const SummaryCard = ({
   value: string | number;
   className?: string;
 }) => (
-  <div className="bg-white/5 rounded-2xl border border-white/10 p-5">
+  <div className="bg-slate-800/60 rounded-2xl border border-white/10 p-5">
     <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">{label}</p>
     <p className={`text-2xl font-black ${className || 'text-white'}`}>{value}</p>
   </div>
@@ -257,15 +257,15 @@ const Transactions = () => {
             value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(0); }}
             placeholder="Search by name, matric, or receipt no..."
-            className="h-10 pl-10 bg-white/5 border-white/10 text-white placeholder:text-slate-500 rounded-xl"
+            className="h-10 pl-10 bg-slate-800 border-white/10 text-white placeholder:text-slate-500 rounded-xl"
           />
         </div>
         <div className="flex gap-2 items-center">
           <Select value={statusFilter} onValueChange={(v: StatusFilter) => { setStatusFilter(v); setPage(0); }}>
-            <SelectTrigger className="h-10 w-32 bg-white/5 border-white/10 text-white rounded-xl">
+            <SelectTrigger className="h-10 w-32 bg-slate-800 border-white/10 text-white rounded-xl">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className='bg-slate-700 text-white'>
               <SelectItem value="all">All</SelectItem>
               <SelectItem value="success">Success</SelectItem>
               <SelectItem value="failed">Failed</SelectItem>
@@ -279,14 +279,14 @@ const Transactions = () => {
             type="date"
             value={dateFrom}
             onChange={(e) => setDateFrom(e.target.value)}
-            className="h-10 w-36 bg-white/5 border-white/10 text-white rounded-xl"
+            className="h-10 w-36 bg-slate-800 border-white/10 text-white rounded-xl"
           />
           <span className="text-slate-500 text-sm">—</span>
           <Input
             type="date"
             value={dateTo}
             onChange={(e) => setDateTo(e.target.value)}
-            className="h-10 w-36 bg-white/5 border-white/10 text-white rounded-xl"
+            className="h-10 w-36 bg-slate-800 border-white/10 text-white rounded-xl"
           />
           <Button
             onClick={handleFilter}
@@ -310,11 +310,11 @@ const Transactions = () => {
       </div>
 
       {/* Table */}
-      <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+      <div className="bg-slate-800/60 rounded-2xl border border-white/10 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 bg-white/5">
+              <tr className="border-b border-white/10 bg-white/10">
                 <Th>Receipt No.</Th>
                 <Th>Student Name</Th>
                 <Th>Matric No.</Th>
@@ -361,7 +361,7 @@ const Transactions = () => {
                           <span className="font-mono text-xs text-slate-400">{tx.matric_number}</span>
                         </div>
                       </Td>
-                      <Td className="font-mono font-bold">
+                      <Td className="font-mono font-bold text-slate-400">
                         ₦{Number(tx.amount).toLocaleString()}
                       </Td>
                       <Td>

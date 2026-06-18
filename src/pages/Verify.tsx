@@ -2,22 +2,24 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import type { Student, EnrolledCourse } from '@/types/database';
+import { getIDStatus } from '@/lib/idStatus';
 import { CheckCircle2, XCircle, ShieldCheck, BookOpen, GraduationCap } from 'lucide-react';
 
 const Verify = () => {
-  const { matricNumber } = useParams<{ matricNumber: string }>();
+  const { id } = useParams<{ id: string }>();
   const [student, setStudent] = useState<Student | null>(null);
   const [courses, setCourses] = useState<EnrolledCourse[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isStatusValid, setIsStatusValid] = useState<boolean | null>(null);
 
   useEffect(() => {
     const verifyStudent = async () => {
-      if (!matricNumber) return;
+      if (!id) return;
       
       const { data: studentData, error: studentError } = await supabase
         .from('students')
         .select('*')
-        .eq('matric_number', matricNumber)
+        .eq('id', id)
         .single();
 
       if (studentError || !studentData) {
@@ -27,10 +29,19 @@ const Verify = () => {
 
       setStudent(studentData);
 
+      try {
+        const status = await getIDStatus(studentData.matric_number);
+        setIsStatusValid(
+          status.status_label === 'active' || status.status_label === 'expiring_soon'
+        );
+      } catch {
+        setIsStatusValid(false);
+      }
+
       const { data: coursesData } = await supabase
         .from('enrolled_courses')
         .select('*')
-        .eq('matric_number', matricNumber);
+        .eq('matric_number', studentData.matric_number);
 
       if (coursesData) {
         setCourses(coursesData);
@@ -39,7 +50,7 @@ const Verify = () => {
       setIsLoading(false);
     }
     verifyStudent();
-  }, [matricNumber]);
+  }, [id]);
 
   if (isLoading) return <div className="flex min-h-screen items-center justify-center">Verifying Record...</div>;
 
@@ -47,9 +58,9 @@ const Verify = () => {
     <div className="min-h-screen bg-background py-12 px-4 flex flex-col items-center">
       <div className="w-full max-w-2xl space-y-6">
         {/* Verification Status Header */}
-        <div className={`rounded-3xl p-8 text-center shadow-2xl border-2 backdrop-blur-xl ${student ? 'bg-green-500/10 border-green-500/20' : 'bg-red-500/10 border-red-500/20'}`}>
+        <div className={`rounded-3xl p-8 text-center shadow-2xl border-2 backdrop-blur-xl ${student && isStatusValid ? 'bg-green-500/10 border-green-500/20' : 'bg-red-500/10 border-red-500/20'}`}>
           <div className="flex flex-col items-center gap-4">
-            {student ? (
+            {student && isStatusValid ? (
               <>
                 <div className="h-20 w-20 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
                   <CheckCircle2 className="h-12 w-12" />
@@ -66,14 +77,14 @@ const Verify = () => {
                 </div>
                 <div>
                   <h1 className="text-3xl font-black text-red-500 uppercase tracking-tighter">Invalid ID</h1>
-                  <p className="text-red-400/80 font-bold text-xs uppercase tracking-widest">No record found in database</p>
+                  <p className="text-red-400/80 font-bold text-xs uppercase tracking-widest">Card Expired</p>
                 </div>
               </>
             )}
           </div>
         </div>
 
-        {student && (
+        {student && isStatusValid && (
           <>
             {/* Student Profile Card */}
             <div className="bg-card/50 rounded-3xl p-8 shadow-2xl border border-white/10 backdrop-blur-xl flex flex-col md:flex-row gap-8 items-center md:items-start">

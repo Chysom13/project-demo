@@ -218,7 +218,7 @@ const StatusPage = () => {
             <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
             Back to Home
           </button>
-          <h1 className="text-3xl font-black text-white tracking-tight">Request Status</h1>
+          <p className="text-5xl font-black text-white tracking-tight">Request Status</p>
           <p className="text-slate-400 mt-1">Track your digital ID verification progress</p>
         </div>
 
@@ -258,8 +258,7 @@ const StatusPage = () => {
                   </div>
                   <Button
                     onClick={() => setShowReceipt(true)}
-                    variant="outline"
-                    className="w-full h-11 gap-2 rounded-xl mt-2"
+                    className="w-full h-12 mt-6 bg-green-600 hover:bg-green-500 text-white font-black uppercase tracking-widest text-xs transition-all rounded-xl shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:shadow-[0_0_30px_rgba(34,197,94,0.6)] cursor-pointer"
                   >
                     <FileText className="h-4 w-4" />
                     Download Receipt PDF
@@ -332,8 +331,7 @@ const StatusPage = () => {
                 <Button
                   onClick={handleRefresh}
                   disabled={isRefreshing}
-                  variant="outline"
-                  className="w-full h-11 gap-2 rounded-xl"
+                  className="w-full h-12 mt-6 bg-green-600 hover:bg-green-500 text-white font-black uppercase tracking-widest text-xs transition-all rounded-xl shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:shadow-[0_0_30px_rgba(34,197,94,0.6)] cursor-pointer"
                 >
                   <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
                   Refresh Status

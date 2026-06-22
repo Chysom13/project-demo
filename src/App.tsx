@@ -56,7 +56,7 @@ const TitleUpdater = () => {
     }
     const match = PREFIX_TITLE_MAP.find(([prefix]) => pathname.startsWith(prefix));
     if (match) {
-      document.title = `${match[1]} | MTU One ID Portal`;
+      document.title = `${match[1]} | TID Portal`;
       return;
     }
     document.title = 'TID Portal';

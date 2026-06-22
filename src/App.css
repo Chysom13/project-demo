@@ -1,3 +1,13 @@
+.admin-content .text-xs { font-size: calc(0.75rem + 5px); }
+.admin-content .text-sm { font-size: calc(0.875rem + 5px); }
+.admin-content .text-base { font-size: calc(1rem + 5px); }
+.admin-content .text-lg { font-size: calc(1.125rem + 5px); }
+.admin-content .text-xl { font-size: calc(1.25rem + 5px); }
+.admin-content .text-2xl { font-size: calc(1.5rem + 5px); }
+.admin-content .text-3xl { font-size: calc(1.875rem + 5px); }
+.admin-content .text-4xl { font-size: calc(2.25rem + 5px); }
+.admin-content .text-5xl { font-size: calc(3rem + 5px); }
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;

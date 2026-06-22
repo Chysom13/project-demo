@@ -40,14 +40,14 @@ const Navbar = ({ onViewReceipt, onViewID }: NavbarProps) => {
         {isCardPage && (
           <>
             <div className="flex items-center gap-2">
-              <Button 
+              {/* <Button 
                 variant="ghost" 
                 onClick={onViewID}
                 className="text-slate-300 hover:text-white hover:bg-white/5 text-xs font-bold uppercase tracking-widest"
               >
                 <CreditCard className="mr-2 h-4 w-4 text-blue-400" />
                 Digital ID
-              </Button>
+              </Button> */}
               <Button 
                 variant="ghost" 
                 onClick={onViewReceipt}

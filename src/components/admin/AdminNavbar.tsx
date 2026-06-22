@@ -156,7 +156,7 @@ const AdminNavbar = () => {
 
       {/* Right: Admin Info & Actions */}
       <div className="hidden md:flex items-center gap-3">
-        <span className="text-[10px] text-slate-500 font-mono truncate max-w-[120px]">
+        {/* <span className="text-[10px] text-slate-500 font-mono truncate max-w-[120px]">
           {adminMatric}
         </span>
         <div className="h-4 w-px bg-white/10" />
@@ -165,7 +165,7 @@ const AdminNavbar = () => {
             <ExternalLink className="h-3 w-3" />
             Portal
           </Button>
-        </Link>
+        </Link> */}
         <Button
           variant="ghost"
           size="xs"

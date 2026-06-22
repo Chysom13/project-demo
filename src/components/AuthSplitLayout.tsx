@@ -20,7 +20,7 @@ const AuthSplitLayout = ({ children, hideNavbar }: AuthSplitLayoutProps) => {
               <ShieldCheck className="h-10 w-10 text-white" />
             </div>
             <p className="text-5xl lg:text-7xl font-black tracking-tight leading-tight text-white">
-              MTU Digital Identity <br />
+              Temp ID Digital Identity <br />
               <span className="text-white">Access Portal</span>
             </p>
             <p className="mt-6 text-xl text-slate-400 font-medium max-w-lg leading-relaxed">

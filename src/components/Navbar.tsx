@@ -15,8 +15,8 @@ const Navbar = ({ onViewReceipt, onViewID }: NavbarProps) => {
   return (
     <nav className="h-16 border-b border-white/5 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 px-6 flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <img src="/logo.png" className="h-8 w-8 object-contain" alt="MTU Logo" />
-        <span className="text-lg font-black text-white tracking-tight">MTU Portal</span>
+        <img src="/tid-icon.svg" className="h-8 w-8 object-contain" alt="TID Logo" />
+        <span className="text-lg font-black text-white tracking-tight">TID Portal</span>
       </div>
 
       <div className="flex items-center gap-4">

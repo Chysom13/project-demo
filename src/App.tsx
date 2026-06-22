@@ -51,7 +51,7 @@ const TitleUpdater = () => {
   useEffect(() => {
     const exact = TITLE_MAP[pathname];
     if (exact) {
-      document.title = `${exact} | MTU One ID Portal`;
+      document.title = `${exact} | TID Portal`;
       return;
     }
     const match = PREFIX_TITLE_MAP.find(([prefix]) => pathname.startsWith(prefix));
@@ -59,7 +59,7 @@ const TitleUpdater = () => {
       document.title = `${match[1]} | MTU One ID Portal`;
       return;
     }
-    document.title = 'MTU One ID Portal';
+    document.title = 'TID Portal';
   }, [pathname]);
 
   return null;

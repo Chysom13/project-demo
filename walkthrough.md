@@ -1,8 +1,8 @@
-# MTU One ID Portal — Project Walkthrough
+# TID Portal — Project Walkthrough
 
 ## Project Overview
 
-The **MTU One ID Portal** is a premium, self-service student identity platform built for Mountain Top University. It enables students to manage their official digital credentials, process replacement fees, and download print-ready ID cards through a sophisticated, high-performance interface.
+The **TID Portal** is a premium, self-service student identity platform built for Mountain Top University. It enables students to manage their official digital credentials, process replacement fees, and download print-ready ID cards through a sophisticated, high-performance interface.
 
 ---
 

@@ -1,6 +1,6 @@
-# MTU One ID Portal
+# TID Portal
 
-Digital student ID card management system for Mountain Top University with payment processing, admin verification workflows, and receipt generation.
+Digital student ID card management system with payment processing, admin verification workflows, and receipt generation.
 
 ## Tech Stack
 

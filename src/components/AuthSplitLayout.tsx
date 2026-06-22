@@ -35,7 +35,7 @@ const AuthSplitLayout = ({ children, hideNavbar }: AuthSplitLayoutProps) => {
           </div>
           <div className="absolute bottom-6 text-center w-full">
             <p className="text-xs text-slate-500">
-              Mountain Top University &copy; {new Date().getFullYear()}
+              TID &copy; {new Date().getFullYear()}
             </p>
           </div>
         </div>

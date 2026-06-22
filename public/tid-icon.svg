@@ -1,0 +1,14 @@
+<svg width="200" height="220" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Temp ID standalone icon</title>
+<desc>A standalone ID badge icon with a checkmark indicating verification, in purple.</desc>
+
+<g transform="translate(40,35)">
+  <rect x="0" y="0" width="120" height="150" rx="14" fill="#FFFFFF" stroke="#D6D3F5" stroke-width="2"/>
+  <rect x="14" y="14" width="24" height="6" rx="3" fill="#9CA3AF"/>
+  <rect x="18" y="106" width="84" height="7" rx="3.5" fill="#9CA3AF"/>
+  <rect x="30" y="124" width="60" height="6" rx="3" fill="#9CA3AF"/>
+
+  <circle cx="60" cy="62" r="38" fill="#7C3AED"/>
+  <path d="M42 62 L55 76 L80 48" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

@@ -1,5 +1,5 @@
 ## Goal
-- Build an MTU One ID Portal — a digital student ID card management system with payment processing, receipt generation, admin dashboard, Supabase backend, and a payment-to-verification workflow.
+- Build a TID Portal — a digital student ID card management system with payment processing, receipt generation, admin dashboard, Supabase backend, and a payment-to-verification workflow.
 
 ## Constraints & Preferences
 - Stack: React 19, TypeScript, Vite 8, Tailwind CSS 4, shadcn/ui (Radix Nova), react-router-dom v7, Supabase JS v2

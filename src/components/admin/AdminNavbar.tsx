@@ -73,8 +73,8 @@ const AdminNavbar = () => {
     <nav className="h-14 border-b border-white/5 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 px-4 sm:px-6 flex items-center justify-between shrink-0">
       {/* Left: Brand */}
       <div className="flex items-center gap-2 shrink-0">
-        <img src="/logo.png" className="h-7 w-7 object-contain" alt="MTU Logo" />
-        <span className="text-base font-black text-white tracking-tight hidden sm:inline">MTU Admin</span>
+        <img src="/tid-icon.svg" className="h-7 w-7 object-contain" alt="TID Logo" />
+        <span className="text-base font-black text-white tracking-tight hidden sm:inline">TID Admin</span>
         <span className="text-base font-black text-white tracking-tight sm:hidden">Admin</span>
       </div>
 
